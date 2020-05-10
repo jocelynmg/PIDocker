@@ -1,7 +1,7 @@
-CREATE DATABASE IF NOT EXISTS pi_dockers;
-use pi_dockers;
+CREATE DATABASE IF NOT EXISTS pi_docker;
+use pi_docker;
 
-CREATE TABLE USUARIOS(
+CREATE TABLE Usuarios(
 id_usuario int(10) auto_increment not null,
 nombre varchar(40),
 username varchar(20),

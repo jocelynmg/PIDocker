@@ -2,6 +2,7 @@ import logoUAM
 import usuarios.usuario as user
 
 class Acciones:
+    """Define los métodos utilizados por los usuarios"""
 
     #Método para registro de nuevos usuarios en la aplicación
     def registrarse(self):
@@ -13,13 +14,16 @@ class Acciones:
         username = input('Usuario: ')
         password = input('Password: ')
 
+        #Se crea instancia de Usuario y se registra en la BD
         usuario = user.Usuario(nombre,username,password)
         registro = usuario.insercionBD()
 
         if registro[0] >= 1:
-            print(f'\nRegistrado: {registro[1].nombre}, {registro[1].username}, {registro[1].password}\n')
+            print(f'\nRegistrado: {registro[1].nombre}, {registro[1].username},' 
+                       + f' {registro[1].password}\n')
         else :
-            print(f'\nNo se pudo completar el registro. El username «{registro[1].username}» ya existe.\n')
+            print(f'\nNo se pudo completar el registro. El username'
+                    + f' «{registro[1].username}» ya existe.\n')
 
     #Método el inicio de sesión de los usuarios
     def iniciarSesion(self):
@@ -34,14 +38,16 @@ class Acciones:
             usuario = user.Usuario('',username,password)
             login = usuario.identificarseBD()
 
-            #Valida que el usuario conincide con el de la BD
+            #Valida que los datos del usuario coninciden en la BD
             if username == login[2]:
                 #print(login)
                 print(f'\n¡Bienvenid@ {login[1]}!, {login[2]}')
-                print(f'\n¡Haz iniciado sesión como {username} y contraseña {password}!\n')
+                print(f'\n¡Haz iniciado sesión como {username} y contraseña'
+                            + f' {password}!\n')
             
             return login
 
+        #Regresa un dato None cuando los datos no hacen match en la BD
         except:
             print('Datos incorrectos, intentalo más tarde')
             return None
