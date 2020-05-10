@@ -1,5 +1,6 @@
 
 def printLogo():
+    """Regresa el encabezado de la aplicación"""
 
     logo = """
     ######################################################

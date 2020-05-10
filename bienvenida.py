@@ -2,7 +2,8 @@ import os, logoUAM
 from usuarios import acciones
 
 def inicio():
-    """Muestra pantalla de bienvenida a los usuarios"""
+    """Muestra pantalla de bienvenida a los usuarios para iniciar sesión
+        o registrase en la aplicación"""
 
     os.system('clear')
     logo = logoUAM.printLogo()

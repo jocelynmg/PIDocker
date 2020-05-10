@@ -9,14 +9,16 @@ cursor = connect[1]
 class Usuario:
     """Define un usuario con nombre, username y contraseña"""
 
-    #Constructor de Usuario
     def __init__(self, nombre, username, password):
+        """Constructor de Usuario"""
+
         self.nombre = nombre
         self.username = username
         self.password = password
 
-    #Método para la inserción del usuario a la BD
     def insercionBD(self):
+        """Inserta un nuevo usuario en la BD"""
+
         #Cifrado de contraseña
         cifrado = hashlib.sha256()
         cifrado.update(self.password.encode('utf8'))
@@ -36,9 +38,9 @@ class Usuario:
             resultado = [0, self]
 
         return resultado
-
-    #Método para la lectura del usuario desde la BD
+    
     def identificarseBD(self):
+        """Recupera un usuario registrado previamente en la BD"""
 
         #Query para validar usuario en la BD
         sql = "SELECT * FROM Usuarios WHERE username = %s AND passwd = %s"

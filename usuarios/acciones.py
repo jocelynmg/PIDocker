@@ -4,8 +4,9 @@ import usuarios.usuario as user
 class Acciones:
     """Define los métodos utilizados por los usuarios"""
 
-    #Método para registro de nuevos usuarios en la aplicación
     def registrarse(self):
+        """Método para registro de nuevos usuarios en la aplicación"""
+
         logo = logoUAM.printLogo()
         print(logo)
         print('### Registro ###')
@@ -25,8 +26,9 @@ class Acciones:
             print(f'\nNo se pudo completar el registro. El username'
                     + f' «{registro[1].username}» ya existe.\n')
 
-    #Método el inicio de sesión de los usuarios
     def iniciarSesion(self):
+        """Método para el inicio de sesión de los usuarios"""
+        
         logo = logoUAM.printLogo()
         print(logo)
         print('### Inicio de sesión ###\n')
