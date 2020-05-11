@@ -1,27 +1,12 @@
-import os, logoUAM
+import os
+import vistas
 from usuarios import acciones
-
-def inicio():
-    """Muestra pantalla de bienvenida a los usuarios para iniciar sesión
-        o registrase en la aplicación"""
-
-    os.system('clear')
-    logo = logoUAM.printLogo()
-    print(logo)
-    print('Elige la opción que deseas para ingresar a la aplicaciòn:')
-    print("""
-        1. Iniciar sesión
-        2. Registrarse
-    """)
-    opcion = input('Tu opción: ')
-
-    return opcion
 
 
 if __name__ == "__main__":
 
-    opcion = inicio()
     accion = acciones.Acciones()
+    opcion = vistas.inicio()
 
     try:
         os.system('clear')
@@ -33,6 +18,8 @@ if __name__ == "__main__":
             user = accion.iniciarSesion()
             if user != None:
                 print(f'Logueado {user[1]} {user[2]}')
+                vistas.seleccionTipoEjercicio(user)
+                
             else:
                 print('Falló')
 
