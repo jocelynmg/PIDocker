@@ -46,8 +46,7 @@ def vistaLevantarDocker(usuario):
     sleep(1)
     print('Ahora estás en KornShell')
 
-    os.system('sudo docker rm $(sudo docker ps -a | grep "Exited" '
-                + '| awk \'{print $NF}\') > null')
+    os.system('docker rm $(docker ps -a) ')
 
     os.system('sudo systemctl stop docker')
     subprocess.call('ksh')

@@ -1,5 +1,5 @@
 # PIDocker
-Proyecto de Integración
+Proyecto Docker
 
 git add [archivos]      #para agregar al stage
 git push                #lo sube al repositorio remoto
