@@ -1,5 +1,6 @@
 import sys, subprocess
 
+"""
 proceso = subprocess.Popen(['sudo docker ps -a'], stdout=subprocess.PIPE, shell=True)
 proceso.wait()
 salida = proceso.stdout.read()
@@ -23,3 +24,16 @@ if resultado == True:
     print('¡Ejercicio Correcto!')
 else:
     print('¡Resultado incorrecto!, intenta otra vez')
+"""
+
+
+#SE RECUPERAN LOS IDS DE LOS DOCKER EN ESTADO EXITED
+proceso = subprocess.Popen('docker ps -aq'.split(), stdout=subprocess.PIPE)
+proceso.wait()
+ids = proceso.stdout.read()
+proceso.stdout.close()
+ids = ids.decode(sys.getdefaultencoding()).split()
+
+#SE LIMPIAN LOS CONTENEDORES QUE SE HAYAN EJECUTADO
+for id in ids:
+    subprocess.Popen(f'docker rm {id}'.split())

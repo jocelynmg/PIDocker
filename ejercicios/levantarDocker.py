@@ -1,32 +1,36 @@
-import os, sys, logoUAM
+import sys, logoUAM
 import subprocess
 from time import sleep
 
 def evaluarEjercicio():
+    resultado = False
 
-    import sys, subprocess
+    #SE SACA LA LISTA DE LOS DOCKER QUE HAYA EJECUTADO EL USUARIO
+    proceso = subprocess.Popen(
+        'docker ps -a'.split(),
+        stdout = subprocess.PIPE,
+        stderr = subprocess.DEVNULL
+        )
 
-    proceso = subprocess.Popen(['sudo docker ps -a'], stdout=subprocess.PIPE, shell=True)
     proceso.wait()
     salida = proceso.stdout.read()
     proceso.stdout.close()
-    salida = salida.decode(sys.getdefaultencoding())
+    salida = salida.decode(sys.getdefaultencoding()).split('\n')
 
-    listSalida = salida.split('\n')
-
-    resultado = False
-
-    for line in listSalida:
+    #EVALUA QUE SE TENGAN LOS PARÁMETROS SOLICITADOS EN EL DOCKER
+    for line in salida:
 
         if 'python' in line and '\"sleep 5\"' in line and 'PythonTest' in line:
-            #print(line)
             resultado = True
+            print('\n¡Ejercicio Correcto!\n')
+        else:
+            print('\n¡Resultado incorrecto!, intenta otra vez\n')
 
     return resultado
 
 
 def vistaLevantarDocker(usuario):
-    subprocess.call('clear')
+    subprocess.run('clear')
 
     logo = logoUAM.printLogo()
     print(logo)
@@ -42,28 +46,40 @@ def vistaLevantarDocker(usuario):
     """
     print(sentencia)
 
-    input('Comenzar...')
-    sleep(1)
-    print('Ahora estás en KornShell')
+    input('Da enter para comenzar...')
 
-    os.system('docker rm $(docker ps -a) ')
+    #SE RECUPERAN LOS IDS DE LOS DOCKER EN ESTADO EXITED
+    proceso = subprocess.Popen(
+        'docker ps -aq'.split(), 
+        stdout = subprocess.PIPE,
+        stderr = subprocess.DEVNULL
+        )
+    proceso.wait()
+    ids = proceso.stdout.read()
+    proceso.stdout.close()
+    ids = ids.decode(sys.getdefaultencoding()).split()
 
-    os.system('sudo systemctl stop docker')
+    #SE LIMPIAN LOS CONTENEDORES QUE SE HAYAN EJECUTADO
+    for id in ids:
+        subprocess.Popen(f'docker rm {id}'.split())
+
+    #SE APAGA EL SERVICIO DE DOCKER
+    subprocess.run(
+        'sudo systemctl stop docker.service'.split(),
+        stderr = subprocess.DEVNULL
+        )
+    
+    #ENTRANDO A KORN SHELL
+    print('\nAhora estás en KornShell')
     subprocess.call('ksh')
 
-    print('Ya salimos del KornShell')
-
-    resultado = evaluarEjercicio()
+    #UNA VEZ QUE EL USUARIO ENTRA EXIT EN LA TERMINAL, SE EVALUA EL EJERCICIO
     print('\nEvaluando ejercicio...')
-    sleep(3)
+    sleep(1)
+    resultado = evaluarEjercicio()
 
-    if resultado == True:
-        print('\n¡Ejercicio Correcto!')
-    else:
-        print('\n¡Resultado incorrecto!, intenta otra vez')
-
-    sleep(3)
-    input()
     resultadoEjercicio = [usuario, resultado]
+    sleep(2)
+    input('\nDa enter para continuar.\n')
 
     return(resultadoEjercicio)   
