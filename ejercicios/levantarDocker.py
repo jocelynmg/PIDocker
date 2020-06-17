@@ -2,6 +2,39 @@ import sys, logoUAM
 import subprocess
 from time import sleep
 
+def prepararEjercicio():
+    #SE RECUPERAN LOS IDS DE LOS DOCKER EN ESTADO EXITED
+    proceso = subprocess.Popen(
+        'docker ps -aq'.split(), 
+        stdout = subprocess.PIPE,
+        stderr = subprocess.DEVNULL
+        )
+
+    proceso.wait()
+    ids = proceso.stdout.read()
+    proceso.stdout.close()
+    ids = ids.decode(sys.getdefaultencoding()).split()
+
+    #SE LIMPIAN LOS CONTENEDORES QUE SE HAYAN PREVIAMENTE EJECUTADO
+    for id in ids:
+        rm = subprocess.Popen(
+            f'docker rm {id}'.split(),
+            stdout = subprocess.DEVNULL,
+            stderr = subprocess.DEVNULL
+            )
+        rm.wait()
+        rm.stdout.close()
+    
+
+    #SE APAGA EL SERVICIO DE DOCKER
+    subprocess.run(
+        'sudo systemctl stop docker.service'.split(),
+        stdout = subprocess.DEVNULL,
+        stderr = subprocess.DEVNULL
+        )
+
+
+
 def evaluarEjercicio():
     resultado = False
 
@@ -23,8 +56,9 @@ def evaluarEjercicio():
         if 'python' in line and '\"sleep 5\"' in line and 'PythonTest' in line:
             resultado = True
             print('\n¡Ejercicio Correcto!\n')
-        else:
-            print('\n¡Resultado incorrecto!, intenta otra vez\n')
+    
+    if resultado == False:
+        print('\n¡Resultado incorrecto!, intenta otra vez\n')
 
     return resultado
 
@@ -48,26 +82,8 @@ def vistaLevantarDocker(usuario):
 
     input('Da enter para comenzar...')
 
-    #SE RECUPERAN LOS IDS DE LOS DOCKER EN ESTADO EXITED
-    proceso = subprocess.Popen(
-        'docker ps -aq'.split(), 
-        stdout = subprocess.PIPE,
-        stderr = subprocess.DEVNULL
-        )
-    proceso.wait()
-    ids = proceso.stdout.read()
-    proceso.stdout.close()
-    ids = ids.decode(sys.getdefaultencoding()).split()
-
-    #SE LIMPIAN LOS CONTENEDORES QUE SE HAYAN EJECUTADO
-    for id in ids:
-        subprocess.Popen(f'docker rm {id}'.split())
-
-    #SE APAGA EL SERVICIO DE DOCKER
-    subprocess.run(
-        'sudo systemctl stop docker.service'.split(),
-        stderr = subprocess.DEVNULL
-        )
+    #SE LLAMA A LA FUNCIÓN PARA PREPARAR EL EJERCICIO
+    prepararEjercicio()
     
     #ENTRANDO A KORN SHELL
     print('\nAhora estás en KornShell')
@@ -82,4 +98,4 @@ def vistaLevantarDocker(usuario):
     sleep(2)
     input('\nDa enter para continuar.\n')
 
-    return(resultadoEjercicio)   
+    return(resultadoEjercicio)
