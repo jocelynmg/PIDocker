@@ -6,7 +6,7 @@ def connectarBD():
     database = mysql.connector.connect(
         host = 'localhost',
         user = 'admin',
-        passwd = 'admin',
+        passwd = 'secreto',
         database = 'pi_docker'
     )
 

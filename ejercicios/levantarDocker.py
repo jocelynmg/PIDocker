@@ -23,7 +23,7 @@ def prepararEjercicio():
             stderr = subprocess.DEVNULL
             )
         rm.wait()
-        rm.stdout.close()
+        #rm.stdout.close()
     
 
     #SE APAGA EL SERVICIO DE DOCKER
@@ -69,9 +69,9 @@ def vistaLevantarDocker(usuario):
     logo = logoUAM.printLogo()
     print(logo)
     sentencia = """
-    Uamito tiene que levantar un Docker de python con el nombre "PythonTest"
+    Pete tiene que levantar un Docker de python con el nombre "PythonTest"
     en modo DETACH y que ejecute el comando "sleep 5", pero tiene problemas
-    para lograrlo. Ayuda a Uamito a levantar su Docker, una vez que el contendor
+    para lograrlo. Ayuda a Pete a levantar su Docker. Una vez que el contendor
     con las características mencionadas se haya ejecutado se dará como bueno
     el ejercicio.
 
