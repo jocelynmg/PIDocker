@@ -1,4 +1,4 @@
-import os, logoUAM
+import subprocess, logoUAM
 from ejercicios import tipos
 
 def inicio():
@@ -6,15 +6,17 @@ def inicio():
         o registrase en la aplicación
         """
 
-    os.system('clear')
+    subprocess.call('clear')
     logo = logoUAM.printLogo()
     print(logo)
-    print('Elige la opción que deseas para ingresar a la aplicaciòn:')
+    print(' ¡Hola, bienvenid@!')
+    print(' Elige la opción que deseas para ingresar a la aplicación:')
     print("""
         1. Iniciar sesión
         2. Registrarse
+        3. Salir
     """)
-    opcion = input('Tu opción: ')
+    opcion = input(' Tu opción: ')
 
     return opcion
 
@@ -22,10 +24,10 @@ def seleccionTipoEjercicio(usuario):
     """Muestra pantalla donde el usuario elige el tipo de ejercicos que quiere
     resolver, así como el avance"""
 
-    os.system('clear')
+    subprocess.call('clear')
     logo = logoUAM.printLogo()
     print(logo)
-    print(f'¡Hola {usuario[1]}!,')
+    print(f'¡Hola {usuario.nombre}!,')
     print('A continuación puedes elegir el tipo de ejercicio que quieres realizar')
     print("""
         1. Retos para prácticar comandos de Docker
@@ -39,7 +41,7 @@ def seleccionTipoEjercicio(usuario):
     #print('\nTu avance actual: ')
 
     try:
-        os.system('clear')
+        subprocess.call('clear')
         tipo = tipos.Tipos()
 
         if int(opcion) < 1 and int(opcion) > 4:
@@ -54,11 +56,11 @@ def seleccionTipoEjercicio(usuario):
             seleccionTipoEjercicio(usuario)
 
         elif opcion == '3':
-            print(f'¡Vamos a ver tus estádisticas {usuario[1]}!')
+            print(f'¡Vamos a ver tus estádisticas {usuario.nombre}!')
             seleccionTipoEjercicio(usuario)
 
         elif opcion == '4':
-            print(f'¡Hasta luego, {usuario[1]}!')
+            print(f'¡Hasta luego, {usuario.nombre}!')
 
     except ValueError:
         print('\n¡Opción inválida! :(, intenta otra vez\n')

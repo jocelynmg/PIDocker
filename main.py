@@ -3,7 +3,7 @@ import vistas
 from usuarios import acciones
 
 """
-Esta es el módulo principal del Proyecto de Integración para mejorar hábilidades
+Este es el módulo principal del Proyecto de Integración para mejorar hábilidades
 en el uso de contenedores con tecnología de Docker.
 """
 
@@ -13,27 +13,34 @@ en el uso de contenedores con tecnología de Docker.
 
 if __name__ == "__main__":
 
-    accion = acciones.Acciones()
-    opcion = vistas.inicio()
+    validacion = True
 
-    try:
-        subprocess.run('clear')
+    while validacion:
+        opcion = vistas.inicio()
 
-        if opcion != '1' and opcion != '2':
-            raise ValueError('OpcionInvalida')
+        try:
+            accion = acciones.Acciones()
+            subprocess.call('clear')
 
-        elif opcion == '1':
-            user = accion.iniciarSesion()
-            if user != None:
-                print(f'Logueado {user[1]} {user[2]}')
+            if opcion != '1' and opcion != '2' and opcion != '3':
+                raise ValueError('OpcionInvalida')
+
+            elif opcion == '1':
+                validacion = False
+                user = accion.iniciarSesion()
                 vistas.seleccionTipoEjercicio(user)
-                
-            else:
-                print('Falló')
 
-        elif opcion == '2':
-            accion.registrarse()
+            elif opcion == '2':
+                validacion = False
+                user = accion.registrarse()
+                user = accion.iniciarSesion()
+                vistas.seleccionTipoEjercicio(user)
+            
+            elif opcion == '3':
+                validacion = False
+                print('¡Hasta Luego!')
 
-    except ValueError as err:
-        print('\n¡Opción inválida! :(, intenta otra vez\n')
+        except ValueError as err:
+            print('\n¡Opción inválida! :(, intenta otra vez\n')
+            continue
     

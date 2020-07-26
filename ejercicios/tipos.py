@@ -27,7 +27,7 @@ class Tipos:
         logo = logoUAM.printLogo()
         print(logo)
 
-        print(f'Ok {usuario[1]}, vamos a realizar algunos ejercicios de'
+        print(f'Ok {usuario.nombre}, vamos a realizar algunos ejercicios de'
                 + ' troubleshooting')
         print('\nElige de la siguiente lista cuál quieres hacer:')
 
